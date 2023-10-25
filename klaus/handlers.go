@@ -10,7 +10,7 @@ var (
 	botMessages []tg.Message
 )
 
-func (k *Klaus) HandleMessage(msg *tg.Message) error {
+func (k *Klaus) handleMessage(msg *tg.Message) error {
 	text := "Hello, regular mortal!"
 	if slices.Contains(k.config.Admins, msg.From.ID) {
 		text = "Welcome, The Creator!"
@@ -25,7 +25,7 @@ func (k *Klaus) HandleMessage(msg *tg.Message) error {
 	return nil
 }
 
-func (k *Klaus) HandleEditedMessage(msg *tg.Message) error {
+func (k *Klaus) handleEditedMessage(msg *tg.Message) error {
 	if len(botMessages) == 0 {
 		return nil
 	}
@@ -35,5 +35,9 @@ func (k *Klaus) HandleEditedMessage(msg *tg.Message) error {
 
 	k.bot.Send(edtmsg)
 
+	return nil
+}
+
+func (k *Klaus) handleCommand(cmd string) error {
 	return nil
 }

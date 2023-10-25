@@ -39,14 +39,26 @@ func (k *Klaus) Run() {
 
 	for upd := range updates {
 		if upd.Message != nil {
-			if err := k.HandleMessage(upd.Message); err != nil {
+			err := k.handleMessage(upd.Message)
+
+			if err != nil {
 				log.Printf("Error handling message: %s", err.Error())
 			}
 		}
 
 		if upd.EditedMessage != nil {
-			if err := k.HandleEditedMessage(upd.EditedMessage); err != nil {
+			err := k.handleEditedMessage(upd.EditedMessage)
+
+			if err != nil {
 				log.Printf("Error handling edited message: %s", err.Error())
+			}
+		}
+
+		if upd.Message != nil && upd.Message.Command() != "" {
+			err := k.handleCommand(upd.Message.Command())
+
+			if err != nil {
+				log.Printf("Error handling command %s: %s", upd.Message.Command(), err.Error())
 			}
 		}
 
