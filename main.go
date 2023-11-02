@@ -54,7 +54,7 @@ func main() {
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
 			_, err := bot.Send(klaus.ReplyMessage(
-				upd.Message,
+				upd.EditedMessage,
 				"{edit message from admin}",
 			))
 

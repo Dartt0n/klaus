@@ -20,15 +20,11 @@ func FilterEditMessage() Filter {
 
 func FilterFromAdmin(admins []int64) Filter {
 	return func(upd tg.Update) bool {
-		if upd.Message == nil {
+		if upd.SentFrom() == nil {
 			return false
 		}
 
-		if upd.Message.From == nil {
-			return false
-		}
-
-		return slices.Contains(admins, upd.Message.From.ID)
+		return slices.Contains(admins, upd.SentFrom().ID)
 	}
 }
 
