@@ -13,3 +13,10 @@ func EditMessage(msg *tg.Message, text string) tg.EditMessageTextConfig {
 		Text: text,
 	}
 }
+
+func ReplyMessage(msg *tg.Message, text string) tg.MessageConfig {
+	msgconf := tg.NewMessage(msg.Chat.ID, text)
+	msgconf.BaseChat.ReplyToMessageID = msg.MessageID
+
+	return msgconf
+}
