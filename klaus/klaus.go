@@ -3,6 +3,7 @@ package klaus
 import (
 	"log"
 
+	"github.com/dartt0n/skhron"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -10,6 +11,8 @@ type Klaus struct {
 	Config   *Config
 	Bot      *tg.BotAPI
 	Handlers []Handler
+
+	Storage *skhron.Skhron[User]
 }
 
 func NewKlaus() (*Klaus, error) {
@@ -28,7 +31,9 @@ func NewKlaus() (*Klaus, error) {
 		Config:   config,
 		Bot:      bot,
 		Handlers: make([]Handler, 0),
+		Storage:  skhron.New[User](skhron.WithSnapshotName[User]("klaus")),
 	}
+	k.Storage.LoadSnapshot()
 
 	return k, nil
 }

@@ -1,3 +1,7 @@
+github.com/dartt0n/skhron v0.0.0-20231118064035-578dba1d713f h1:7LqlNk0QtA/mcBJVZtJRU33/X/Ipi8gXUNLtXMwW1tc=
+github.com/dartt0n/skhron v0.0.0-20231118064035-578dba1d713f/go.mod h1:4a1yAq2SXMtS8yz0EFzV/J8cWnFl2riWLjX+A7TD8hw=
+github.com/go-auxiliaries/shrinking-map v0.3.0 h1:kXiLmFY4y2s35WtOYAb02LRZ92IRnfzio+3prZn6ULs=
+github.com/go-auxiliaries/shrinking-map v0.3.0/go.mod h1:UtBmTTKuUfI8wkhzaZ7G/xgHjxGxLwM2a6kf+aWmSmc=
 github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1 h1:wG8n/XJQ07TmjbITcGiUaOtXxdrINDz1b0J1w0SzqDc=
 github.com/go-telegram-bot-api/telegram-bot-api/v5 v5.5.1/go.mod h1:A2S0CWkNylc2phvKXWBBdD3K0iGnDBGbzRpISP2zBl8=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405 h1:yhCVgyC4o1eVCa2tZl7eS0r+SDo693bJlVdllGtEeKM=
