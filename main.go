@@ -2,6 +2,8 @@ package main
 
 import (
 	"log"
+	"os"
+	"os/signal"
 
 	"github.com/dartt0n/klaus/handlers"
 	"github.com/dartt0n/klaus/klaus"
@@ -17,5 +19,14 @@ func main() {
 	handlers.AddDebugHandler(k)
 	handlers.AddAdminHandlers(k)
 
-	k.Run()
+	c := make(chan os.Signal, 1)
+	signal.Notify(c, os.Interrupt)
+
+	go func() {
+		k.Run()
+	}()
+
+	<-c
+	k.Storage.CreateSnapshot()
+
 }

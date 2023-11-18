@@ -25,15 +25,18 @@ func NewKlaus() (*Klaus, error) {
 	if err != nil {
 		return nil, err
 	}
-	bot.Debug = true
+	bot.Debug = false
 
 	k := &Klaus{
 		Config:   config,
 		Bot:      bot,
 		Handlers: make([]Handler, 0),
-		Storage:  skhron.New[User](skhron.WithSnapshotName[User]("klaus")),
+		Storage:  skhron.New[User](),
 	}
-	k.Storage.LoadSnapshot()
+
+	if err := k.Storage.LoadSnapshot(); err != nil {
+		log.Println(err)
+	}
 
 	return k, nil
 }

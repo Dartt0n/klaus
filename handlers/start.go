@@ -18,13 +18,7 @@ func AddStartHandler(k *klaus.Klaus) {
 			if value, err := k.Storage.Get(storeKey); err == nil {
 				user = value
 			} else {
-				user = klaus.User{
-					Id:       tguser.ID,
-					Username: tguser.FirstName + " " + tguser.LastName,
-					Alias:    tguser.UserName,
-					Lang:     tguser.LanguageCode,
-				}
-
+				user = klaus.NewUser(upd)
 				k.Storage.Put(storeKey, user)
 			}
 
@@ -45,7 +39,6 @@ Are you ready for a miracle?`,
 
 			user.Messages = append(user.Messages, newmsg.MessageID)
 			k.Storage.Put(storeKey, user)
-			k.Storage.CreateSnapshot()
 
 			return nil
 		},

@@ -13,8 +13,6 @@ func AddDebugHandler(k *klaus.Klaus) {
 		func(bot *tg.BotAPI, upd tg.Update) error {
 			key := strconv.FormatInt(upd.SentFrom().ID, 10)
 
-			k.Storage.CreateSnapshot()
-
 			if value, err := k.Storage.Get(key); err != nil {
 				bot.Send(klaus.ReplyMessage(
 					upd.Message,

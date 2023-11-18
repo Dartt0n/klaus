@@ -1,6 +1,9 @@
 package handlers
 
 import (
+	"fmt"
+	"regexp"
+
 	"github.com/dartt0n/klaus/klaus"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
@@ -8,9 +11,15 @@ import (
 func AddAdminHandlers(k *klaus.Klaus) {
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
+			users := k.Storage.GetRegex(regexp.MustCompile("^\\d+$"))
+			ids := make([]int64, 0, len(users))
+			for _, user := range users {
+				ids = append(ids, user.ID)
+			}
+
 			_, err := bot.Send(klaus.ReplyMessage(
 				upd.Message,
-				"{message from admin}",
+				fmt.Sprintf("{message from admin, would be resend to %v}", ids),
 			))
 
 			if err != nil {
