@@ -47,3 +47,11 @@ var (
 		),
 	)
 )
+
+var (
+	EnterPrefKeyboardEmpty = tg.NewReplyKeyboard(
+		tg.NewKeyboardButtonRow(
+			tg.NewKeyboardButton(EnterPrefButtonContinue),
+		),
+	)
+)

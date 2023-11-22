@@ -27,6 +27,7 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 				upd.Message,
 				"Awesome! Your current list of preferences is:\n\n"+prefsList,
 			)
+
 			msgconf.ReplyMarkup = EnterPrefKeyboard
 
 			if _, err := bot.Send(msgconf); err != nil {

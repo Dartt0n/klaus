@@ -46,6 +46,23 @@ func AddPrefsMenuHandler(k *klaus.Klaus) {
 				return errors.New("Unknown user")
 			}
 
+			if len(user.Prefs) == 0 {
+				msgconf := klaus.ReplyMessage(
+					upd.Message,
+					`Please, enter atleast on preference`,
+				)
+				msgconf.ReplyMarkup = EnterPrefKeyboardEmpty
+
+				if _, err := bot.Send(msgconf); err != nil {
+					return err
+				}
+
+				user.State = klaus.StateContinuePref
+				k.Storage.Put(user_key, user)
+
+				return nil
+			}
+
 			msgconf := klaus.ReplyMessage(
 				upd.Message,
 				`Cool! We made all preparations! 
@@ -77,7 +94,9 @@ Now you should wait for the 11th of December! That day, at 11:00 AM, I'll send y
 				return errors.New("Unknown user")
 			}
 
-			user.Prefs = user.Prefs[:len(user.Prefs)-1]
+			if len(user.Prefs) > 0 {
+				user.Prefs = user.Prefs[:len(user.Prefs)-1]
+			}
 
 			prefsList := ""
 			for _, pref := range user.Prefs {
@@ -88,7 +107,12 @@ Now you should wait for the 11th of December! That day, at 11:00 AM, I'll send y
 				upd.Message,
 				"Ok! Your current list of preferences is:\n\n"+prefsList,
 			)
-			msgconf.ReplyMarkup = EnterPrefKeyboard
+
+			if len(user.Prefs) == 0 {
+				msgconf.ReplyMarkup = EnterPrefKeyboardEmpty
+			} else {
+				msgconf.ReplyMarkup = EnterPrefKeyboard
+			}
 
 			if _, err := bot.Send(msgconf); err != nil {
 				return err
