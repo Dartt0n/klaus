@@ -5,36 +5,18 @@ import (
 )
 
 var (
-	StartButtonYes = "Let's go!"
-)
-
-var (
 	StartKeyboard = tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
 			tg.NewKeyboardButton(StartButtonYes),
 		),
 	)
-)
 
-var (
-	RulesButtonYes = "Yes, I'm ready"
-)
-
-var (
 	RulesKeyboard = tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
 			tg.NewKeyboardButton(RulesButtonYes),
 		),
 	)
-)
 
-var (
-	EnterPrefButtonContinue = "I want to enter one more preference"
-	EnterPrefButtonEnd      = "That's all"
-	EnterPrefButtonRemove   = "Remove last preference"
-)
-
-var (
 	EnterPrefKeyboard = tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
 			tg.NewKeyboardButton(EnterPrefButtonContinue),
@@ -46,9 +28,7 @@ var (
 			tg.NewKeyboardButton(EnterPrefButtonRemove),
 		),
 	)
-)
 
-var (
 	EnterPrefKeyboardEmpty = tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
 			tg.NewKeyboardButton(EnterPrefButtonContinue),

@@ -17,10 +17,7 @@ func AddPrefsMenuHandler(k *klaus.Klaus) {
 				return errors.New("Unknown user")
 			}
 
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				`Nice! Enter next preference:`,
-			)
+			msgconf := klaus.ReplyMessage(upd.Message, EnterPrefReplyNext)
 			msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true)
 
 			if _, err := bot.Send(msgconf); err != nil {
@@ -47,10 +44,7 @@ func AddPrefsMenuHandler(k *klaus.Klaus) {
 			}
 
 			if len(user.Prefs) == 0 {
-				msgconf := klaus.ReplyMessage(
-					upd.Message,
-					`Please, enter atleast on preference`,
-				)
+				msgconf := klaus.ReplyMessage(upd.Message, EnterPrefReplyZeroPref)
 				msgconf.ReplyMarkup = EnterPrefKeyboardEmpty
 
 				if _, err := bot.Send(msgconf); err != nil {
@@ -63,12 +57,7 @@ func AddPrefsMenuHandler(k *klaus.Klaus) {
 				return nil
 			}
 
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				`Cool! We made all preparations! 
-
-Now you should wait for the 11th of December! That day, at 11:00 AM, I'll send you the name of the person you're preparing a gift for! Good luck, my friend!`,
-			)
+			msgconf := klaus.ReplyMessage(upd.Message, EnterPrefReplyFinish)
 			msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true)
 
 			if _, err := bot.Send(msgconf); err != nil {
@@ -103,11 +92,7 @@ Now you should wait for the 11th of December! That day, at 11:00 AM, I'll send y
 				prefsList += "• " + pref
 			}
 
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				"Ok! Your current list of preferences is:\n\n"+prefsList,
-			)
-
+			msgconf := klaus.ReplyMessage(upd.Message, EnterPrefReplyRemove+prefsList)
 			if len(user.Prefs) == 0 {
 				msgconf.ReplyMarkup = EnterPrefKeyboardEmpty
 			} else {
@@ -131,10 +116,7 @@ Now you should wait for the 11th of December! That day, at 11:00 AM, I'll send y
 
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				`Please, use keyboard buttons :)`,
-			)
+			msgconf := klaus.ReplyMessage(upd.Message, UnexpectedMessageText)
 			msgconf.ReplyMarkup = EnterPrefKeyboard
 
 			if _, err := bot.Send(msgconf); err != nil {

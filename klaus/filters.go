@@ -65,3 +65,23 @@ func FilterUserState(k *Klaus, state int) Filter {
 		return user.State == state
 	}
 }
+
+func FilterEmptyMessage() Filter {
+	return func(upd tg.Update) bool {
+		if upd.Message == nil {
+			return false
+		}
+
+		return upd.Message.Text == ""
+	}
+}
+
+func FilterNonEmptyMessage() Filter {
+	return func(upd tg.Update) bool {
+		if upd.Message == nil {
+			return false
+		}
+
+		return upd.Message.Text != ""
+	}
+}

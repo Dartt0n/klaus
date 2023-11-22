@@ -33,7 +33,7 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 
 			msgconf := klaus.ReplyMessage(
 				upd.Message,
-				"Awesome! Your current list of preferences is:\n\n"+prefsList,
+				EnterPrefReplySuccess+prefsList,
 			)
 
 			msgconf.ReplyMarkup = EnterPrefKeyboard
@@ -49,6 +49,27 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 		},
 
 		klaus.FilterNewMessage(),
+		klaus.FilterNonEmptyMessage(),
+		klaus.FilterUserState(k, klaus.StateEnterPref),
+	)
+
+	k.AddHandler(
+		func(bot *tg.BotAPI, upd tg.Update) error {
+			msgconf := klaus.ReplyMessage(
+				upd.Message,
+				EnterPrefReplyUnkwonMessage,
+			)
+			msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true)
+
+			if _, err := bot.Send(msgconf); err != nil {
+				return err
+			}
+
+			return nil
+		},
+
+		klaus.FilterNewMessage(),
+		klaus.FilterEmptyMessage(),
 		klaus.FilterUserState(k, klaus.StateEnterPref),
 	)
 }

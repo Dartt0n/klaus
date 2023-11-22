@@ -17,16 +17,7 @@ func AddPrefsHandler(k *klaus.Klaus) {
 				return errors.New("Unknown user")
 			}
 
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				`Ho ho ho!
-
-Probably, the person who would receive your name will not know about you anything. 
-
-You need to help him/her to prepare a good gift for you!
-
-So, tell me your 1st preference:`,
-			)
+			msgconf := klaus.ReplyMessage(upd.Message, PrefIntroMessage)
 			msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true) // clean keyboard
 
 			if _, err := bot.Send(msgconf); err != nil {
@@ -46,10 +37,7 @@ So, tell me your 1st preference:`,
 
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				`Please, use keyboard buttons :)`,
-			)
+			msgconf := klaus.ReplyMessage(upd.Message, UnexpectedMessageText)
 			msgconf.ReplyMarkup = RulesKeyboard
 
 			if _, err := bot.Send(msgconf); err != nil {
