@@ -15,6 +15,7 @@ func main() {
 		log.Fatal(err)
 	}
 
+	handlers.AddLocaleHandler(k)
 	handlers.AddStartHandler(k)
 	handlers.AddRulesHandler(k)
 	handlers.AddPrefsHandler(k)

@@ -1,55 +1,46 @@
 package handlers
 
 import (
-	"errors"
 	"strconv"
 
 	"github.com/dartt0n/klaus/klaus"
-	loc "github.com/dartt0n/klaus/loc"
+	"github.com/dartt0n/klaus/loc"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
 func AddStartHandler(k *klaus.Klaus) {
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
-			tguser := upd.SentFrom()
-			if tguser == nil {
-				return errors.New("Empty user")
+			userKey := strconv.FormatInt(upd.SentFrom().ID, 10)
+			user, _ := k.Storage.Get(userKey)
+
+			if upd.CallbackQuery.Data == loc.ENG.Lang {
+				user.Lang = loc.ENG.Lang
+				user.Loc = &loc.ENG
+			} else if upd.CallbackQuery.Data == loc.RUS.Lang {
+				user.Lang = loc.RUS.Lang
+				user.Loc = &loc.RUS
 			}
 
-			storeKey := strconv.FormatInt(tguser.ID, 10)
-
-			var user klaus.User
-
-			if value, err := k.Storage.Get(storeKey); err == nil {
-				user = value
-			} else {
-				user = klaus.NewUser(upd)
-
-				if user.Lang == "ru" {
-					user.Loc = &loc.RUS
-				} else {
-					user.Loc = &loc.ENG
-				}
-
-				k.Storage.Put(storeKey, user)
+			if _, err := bot.Request(tg.NewCallback(upd.CallbackQuery.ID, upd.CallbackQuery.Data)); err != nil {
+				return err
 			}
 
-			msgconf := klaus.ReplyMessage(upd.Message, user.Loc.StartMessage())
+			msgconf := tg.NewMessage(upd.CallbackQuery.Message.Chat.ID, user.Loc.StartMessage())
 			msgconf.ReplyMarkup = StartKeyboard(user.Loc)
 
 			if _, err := bot.Send(msgconf); err != nil {
 				return err
 			}
 
+			user.Prefs = []string{}
 			user.State = klaus.StateRules
-			k.Storage.Put(storeKey, user)
+			k.Storage.Put(userKey, user)
 
 			return nil
 		},
 
-		// React on new message with /start command
-		klaus.FilterNewMessage(),
-		klaus.FilterCommands([]string{"start"}),
+		klaus.FilterCallbackQuery(),
+		klaus.FilterUserState(k, klaus.StateLocale),
 	)
 }

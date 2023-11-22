@@ -64,7 +64,7 @@ func AddPrefsMenuHandler(k *klaus.Klaus) {
 
 				prefsList := ""
 				for _, pref := range user.Prefs {
-					prefsList += "• " + pref
+					prefsList += "• " + pref + "\n"
 				}
 
 				msgconf := klaus.ReplyMessage(upd.Message, user.Loc.EnterPrefReplyRemove()+prefsList)

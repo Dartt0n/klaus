@@ -2,10 +2,11 @@ package loc
 
 var (
 	_   Localization = (*engloc)(nil)
-	ENG              = engloc{}
+	ENG              = engloc{"en"}
 )
 
 type engloc struct {
+	Lang string `json:"lang,omitempty"`
 }
 
 func (e *engloc) UnexpectedMessageText() string {

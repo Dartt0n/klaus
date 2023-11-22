@@ -85,3 +85,9 @@ func FilterNonEmptyMessage() Filter {
 		return upd.Message.Text != ""
 	}
 }
+
+func FilterCallbackQuery() Filter {
+	return func(upd tg.Update) bool {
+		return upd.CallbackQuery != nil
+	}
+}

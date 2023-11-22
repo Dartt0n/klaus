@@ -2,10 +2,11 @@ package loc
 
 var (
 	_   Localization = (*rusloc)(nil)
-	RUS              = rusloc{}
+	RUS              = rusloc{"ru"}
 )
 
 type rusloc struct {
+	Lang string `json:"lang,omitempty"`
 }
 
 func (e *rusloc) UnexpectedMessageText() string {
