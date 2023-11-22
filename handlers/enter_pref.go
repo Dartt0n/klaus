@@ -16,6 +16,14 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 			if err != nil {
 				return errors.New("Unknown user")
 			}
+
+			if upd.Message.Text == EnterPrefButtonContinue ||
+				upd.Message.Text == EnterPrefButtonEnd ||
+				upd.Message.Text == EnterPrefButtonRemove ||
+				upd.Message.Text == RulesButtonYes {
+				return errors.New("Multiple button clicks detected")
+			}
+
 			user.Prefs = append(user.Prefs, upd.Message.Text)
 
 			prefsList := ""
