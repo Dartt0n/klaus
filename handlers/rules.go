@@ -22,34 +22,28 @@ func AddRulesHandler(k *klaus.Klaus) {
 				return errors.New("Unknown user")
 			}
 
-			msgconf := klaus.ReplyMessage(upd.Message, RulesMessage)
-			msgconf.ReplyMarkup = RulesKeyboard
+			if upd.Message.Text != user.Loc.StartButtonYes() {
+				msgconf := klaus.ReplyMessage(upd.Message, user.Loc.UnexpectedMessageText())
+				msgconf.ReplyMarkup = StartKeyboard(user.Loc)
 
-			if _, err := bot.Send(msgconf); err != nil {
-				return err
+				if _, err := bot.Send(msgconf); err != nil {
+					return err
+				}
+
+				return nil
+			} else {
+				msgconf := klaus.ReplyMessage(upd.Message, user.Loc.RulesMessage())
+				msgconf.ReplyMarkup = RulesKeyboard(user.Loc)
+
+				if _, err := bot.Send(msgconf); err != nil {
+					return err
+				}
+
+				user.State = klaus.StatePreferences
+				k.Storage.Put(user_key, user)
+
+				return nil
 			}
-
-			user.State = klaus.StatePreferences
-			k.Storage.Put(user_key, user)
-
-			return nil
-		},
-
-		klaus.FilterNewMessage(),
-		klaus.FilterUserState(k, klaus.StateRules),
-		klaus.FilterMsgText(StartButtonYes),
-	)
-
-	k.AddHandler(
-		func(bot *tg.BotAPI, upd tg.Update) error {
-			msgconf := klaus.ReplyMessage(upd.Message, UnexpectedMessageText)
-			msgconf.ReplyMarkup = StartKeyboard
-
-			if _, err := bot.Send(msgconf); err != nil {
-				return err
-			}
-
-			return nil
 		},
 
 		klaus.FilterNewMessage(),

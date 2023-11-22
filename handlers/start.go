@@ -5,6 +5,7 @@ import (
 	"strconv"
 
 	"github.com/dartt0n/klaus/klaus"
+	loc "github.com/dartt0n/klaus/loc"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
@@ -24,20 +25,18 @@ func AddStartHandler(k *klaus.Klaus) {
 				user = value
 			} else {
 				user = klaus.NewUser(upd)
+
+				if user.Lang == "ru" {
+					user.Loc = &loc.RUS
+				} else {
+					user.Loc = &loc.ENG
+				}
+
 				k.Storage.Put(storeKey, user)
 			}
 
-			msgconf := klaus.ReplyMessage(
-				upd.Message,
-				`Hello, my friend! It's me, Santa! And I'm glad to see you here! 🎅
-
-My clever elves decided to help me with presents for kind people in Innopolis University. 
-
-They created this bot where you can participate in sharing wonderful vibes through your gifts.  
-
-Are you ready for a miracle?`,
-			)
-			msgconf.ReplyMarkup = StartKeyboard
+			msgconf := klaus.ReplyMessage(upd.Message, user.Loc.StartMessage())
+			msgconf.ReplyMarkup = StartKeyboard(user.Loc)
 
 			if _, err := bot.Send(msgconf); err != nil {
 				return err

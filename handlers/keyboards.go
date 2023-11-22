@@ -1,37 +1,44 @@
 package handlers
 
 import (
+	loc "github.com/dartt0n/klaus/loc"
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
 
-var (
-	StartKeyboard = tg.NewReplyKeyboard(
+func StartKeyboard(loc loc.Localization) tg.ReplyKeyboardMarkup {
+	return tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
-			tg.NewKeyboardButton(StartButtonYes),
+			tg.NewKeyboardButton(loc.StartButtonYes()),
 		),
 	)
+}
 
-	RulesKeyboard = tg.NewReplyKeyboard(
+func RulesKeyboard(loc loc.Localization) tg.ReplyKeyboardMarkup {
+	return tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
-			tg.NewKeyboardButton(RulesButtonYes),
+			tg.NewKeyboardButton(loc.RulesButtonYes()),
 		),
 	)
+}
 
-	EnterPrefKeyboard = tg.NewReplyKeyboard(
+func EnterPrefKeyboard(loc loc.Localization) tg.ReplyKeyboardMarkup {
+	return tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
-			tg.NewKeyboardButton(EnterPrefButtonContinue),
+			tg.NewKeyboardButton(loc.EnterPrefButtonContinue()),
 		),
 		tg.NewKeyboardButtonRow(
-			tg.NewKeyboardButton(EnterPrefButtonEnd),
+			tg.NewKeyboardButton(loc.EnterPrefButtonEnd()),
 		),
 		tg.NewKeyboardButtonRow(
-			tg.NewKeyboardButton(EnterPrefButtonRemove),
+			tg.NewKeyboardButton(loc.EnterPrefButtonRemove()),
 		),
 	)
+}
 
-	EnterPrefKeyboardEmpty = tg.NewReplyKeyboard(
+func EnterPrefKeyboardEmpty(loc loc.Localization) tg.ReplyKeyboardMarkup {
+	return tg.NewReplyKeyboard(
 		tg.NewKeyboardButtonRow(
-			tg.NewKeyboardButton(EnterPrefButtonContinue),
+			tg.NewKeyboardButton(loc.EnterPrefButtonContinue()),
 		),
 	)
-)
+}

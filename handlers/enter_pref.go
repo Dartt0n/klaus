@@ -17,10 +17,10 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 				return errors.New("Unknown user")
 			}
 
-			if upd.Message.Text == EnterPrefButtonContinue ||
-				upd.Message.Text == EnterPrefButtonEnd ||
-				upd.Message.Text == EnterPrefButtonRemove ||
-				upd.Message.Text == RulesButtonYes {
+			if upd.Message.Text == user.Loc.EnterPrefButtonContinue() ||
+				upd.Message.Text == user.Loc.EnterPrefButtonEnd() ||
+				upd.Message.Text == user.Loc.EnterPrefButtonRemove() ||
+				upd.Message.Text == user.Loc.RulesButtonYes() {
 				return errors.New("Multiple button clicks detected")
 			}
 
@@ -33,10 +33,10 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 
 			msgconf := klaus.ReplyMessage(
 				upd.Message,
-				EnterPrefReplySuccess+prefsList,
+				user.Loc.EnterPrefReplySuccess()+prefsList,
 			)
 
-			msgconf.ReplyMarkup = EnterPrefKeyboard
+			msgconf.ReplyMarkup = EnterPrefKeyboard(user.Loc)
 
 			if _, err := bot.Send(msgconf); err != nil {
 				return err
@@ -55,9 +55,11 @@ func AddEnterPrefsHandler(k *klaus.Klaus) {
 
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
+			user, _ := k.Storage.Get(strconv.FormatInt(upd.SentFrom().ID, 10))
+
 			msgconf := klaus.ReplyMessage(
 				upd.Message,
-				EnterPrefReplyUnkwonMessage,
+				user.Loc.EnterPrefReplyUnkwonMessage(),
 			)
 			msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true)
 

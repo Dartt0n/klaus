@@ -1,6 +1,9 @@
 package klaus
 
-import tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+import (
+	"github.com/dartt0n/klaus/loc"
+	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
+)
 
 const (
 	StateStart = iota
@@ -19,6 +22,8 @@ type User struct {
 	Messages []int    `json:"messages,omitempty"`
 	State    int      `json:"state,omitempty"`
 	Prefs    []string `json:"preferences,omitempty"`
+
+	Loc loc.Localization
 }
 
 func NewUser(upd tg.Update) User {
