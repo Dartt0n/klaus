@@ -2,6 +2,7 @@ package klaus
 
 import (
 	"slices"
+	"strconv"
 
 	tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 )
@@ -35,5 +36,32 @@ func FilterCommands(command []string) Filter {
 		}
 
 		return slices.Contains(command, upd.Message.Command())
+	}
+}
+
+func FilterMsgText(text string) Filter {
+	return func(upd tg.Update) bool {
+		if upd.Message == nil {
+			return false
+		}
+
+		return upd.Message.Text == text
+	}
+}
+
+func FilterUserState(k *Klaus, state int) Filter {
+	return func(upd tg.Update) bool {
+		tguser := upd.SentFrom()
+		if tguser == nil {
+			return false
+		}
+
+		user_key := strconv.FormatInt(tguser.ID, 10)
+		user, err := k.Storage.Get(user_key)
+		if err != nil {
+			return false
+		}
+
+		return user.State == state
 	}
 }

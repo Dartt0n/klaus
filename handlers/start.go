@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"errors"
 	"strconv"
 
 	"github.com/dartt0n/klaus/klaus"
@@ -11,6 +12,10 @@ func AddStartHandler(k *klaus.Klaus) {
 	k.AddHandler(
 		func(bot *tg.BotAPI, upd tg.Update) error {
 			tguser := upd.SentFrom()
+			if tguser == nil {
+				return errors.New("Empty user")
+			}
+
 			storeKey := strconv.FormatInt(tguser.ID, 10)
 
 			var user klaus.User
@@ -22,7 +27,7 @@ func AddStartHandler(k *klaus.Klaus) {
 				k.Storage.Put(storeKey, user)
 			}
 
-			newmsg, err := bot.Send(klaus.ReplyMessage(
+			msgconf := klaus.ReplyMessage(
 				upd.Message,
 				`Hello, my friend! It's me, Santa! And I'm glad to see you here! 🎅
 
@@ -31,13 +36,14 @@ My clever elves decided to help me with presents for kind people in Innopolis Un
 They created this bot where you can participate in sharing wonderful vibes through your gifts.  
 
 Are you ready for a miracle?`,
-			))
+			)
+			msgconf.ReplyMarkup = StartKeyboard
 
-			if err != nil {
+			if _, err := bot.Send(msgconf); err != nil {
 				return err
 			}
 
-			user.Messages = append(user.Messages, newmsg.MessageID)
+			user.State = klaus.StateRules
 			k.Storage.Put(storeKey, user)
 
 			return nil

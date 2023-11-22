@@ -3,17 +3,22 @@ package klaus
 import tg "github.com/go-telegram-bot-api/telegram-bot-api/v5"
 
 const (
-	StateUndefined = iota
-	StateGreeted
+	StateStart = iota
+	StateRules
+	StatePreferences
+	StateEnterPref
+	StateContinuePref
+	StateWait
 )
 
 type User struct {
-	ID       int64  `json:"id,omitempty"`
-	Username string `json:"username,omitempty"`
-	Alias    string `json:"alias,omitempty"`
-	Lang     string `json:"lang,omitempty"`
-	Messages []int  `json:"messages,omitempty"`
-	State    int    `json:"state,omitempty"`
+	ID       int64    `json:"id,omitempty"`
+	Username string   `json:"username,omitempty"`
+	Alias    string   `json:"alias,omitempty"`
+	Lang     string   `json:"lang,omitempty"`
+	Messages []int    `json:"messages,omitempty"`
+	State    int      `json:"state,omitempty"`
+	Prefs    []string `json:"preferences,omitempty"`
 }
 
 func NewUser(upd tg.Update) User {
@@ -25,6 +30,7 @@ func NewUser(upd tg.Update) User {
 		Alias:    tguser.UserName,
 		Lang:     tguser.LanguageCode,
 		Messages: make([]int, 0),
-		State:    StateUndefined,
+		State:    StateStart,
+		Prefs:    make([]string, 0),
 	}
 }

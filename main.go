@@ -16,8 +16,13 @@ func main() {
 	}
 
 	handlers.AddStartHandler(k)
+	handlers.AddRulesHandler(k)
+	handlers.AddPrefsHandler(k)
+	handlers.AddEnterPrefsHandler(k)
+	handlers.AddPrefsMenuHandler(k)
+
 	handlers.AddDebugHandler(k)
-	handlers.AddAdminHandlers(k)
+	// handlers.AddAdminHandlers(k)
 
 	c := make(chan os.Signal, 1)
 	signal.Notify(c, os.Interrupt)

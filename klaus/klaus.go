@@ -25,7 +25,7 @@ func NewKlaus() (*Klaus, error) {
 	if err != nil {
 		return nil, err
 	}
-	bot.Debug = false
+	bot.Debug = true
 
 	k := &Klaus{
 		Config:   config,
@@ -57,6 +57,7 @@ func (k *Klaus) Run() {
 				if err := handler.Handle(k.Bot, upd); err != nil {
 					log.Printf("Error handling update %+v : %s", upd, err)
 				}
+				break
 			}
 		}
 	}
