@@ -88,7 +88,7 @@ How it will work:
 2️⃣ 11th of December at 11:00 AM you'll receive the name of the person you're preparing a gift for
 3️⃣ You need to prepare present:
 The maximum value of the gift is 500 rubles
-You need to make it before 19th of December (inclusive).
+You need to make it before 22th of December (inclusive).
 Add the note or little postcard, which includes the name of the person for whom the present is.
 
 4️⃣ Bring your gift to the 319 office
