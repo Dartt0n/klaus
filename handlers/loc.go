@@ -32,10 +32,10 @@ func AddLocaleHandler(k *klaus.Klaus) {
 			msgconf := klaus.ReplyMessage(upd.Message, "Please select a language:")
 			msgconf.ReplyMarkup = tg.NewInlineKeyboardMarkup(
 				tg.NewInlineKeyboardRow(
-					tg.NewInlineKeyboardButtonData("Russian", loc.RUS.Lang),
+					tg.NewInlineKeyboardButtonData("🇷🇺 Russian", loc.RUS.Lang),
 				),
 				tg.NewInlineKeyboardRow(
-					tg.NewInlineKeyboardButtonData("English", loc.ENG.Lang),
+					tg.NewInlineKeyboardButtonData("🇺🇸 English", loc.ENG.Lang),
 				),
 			)
 
