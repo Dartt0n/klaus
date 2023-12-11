@@ -16,4 +16,5 @@ type Localization interface {
 	StartMessage() string
 	RulesButtonYes() string
 	RulesMessage() string
+	StartupMessage() string
 }
