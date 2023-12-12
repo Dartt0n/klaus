@@ -5,6 +5,7 @@ import (
 	"os"
 	"os/signal"
 	"regexp"
+	"strconv"
 
 	"github.com/dartt0n/klaus/handlers"
 	"github.com/dartt0n/klaus/klaus"
@@ -18,7 +19,12 @@ func main() {
 	}
 
 	for _, user := range k.Storage.GetRegex(regexp.MustCompile(".*")) {
-		_, err := k.Bot.Send(tgbotapi.NewMessage(user.ID, user.Loc.StartupMessage()))
+		giftFor, err := k.Storage.Get(strconv.FormatInt(user.GiftFor, 10))
+		if err != nil {
+			log.Printf("CRITICAL FAILED TO GET GIFT FOR %v\n", err)
+		}
+
+		_, err = k.Bot.Send(tgbotapi.NewMessage(user.ID, user.Loc.GiftForMessage(giftFor.Username, giftFor.Alias, giftFor.Prefs)))
 		if err != nil {
 			log.Printf("failed to send message to user %d (%s, @%s)\n", user.ID, user.Username, user.Alias)
 		}
@@ -26,10 +32,10 @@ func main() {
 
 	handlers.AddLocaleHandler(k)
 	handlers.AddStartHandler(k)
-	handlers.AddRulesHandler(k)
-	handlers.AddPrefsHandler(k)
-	handlers.AddEnterPrefsHandler(k)
-	handlers.AddPrefsMenuHandler(k)
+	// handlers.AddRulesHandler(k)
+	// handlers.AddPrefsHandler(k)
+	// handlers.AddEnterPrefsHandler(k)
+	// handlers.AddPrefsMenuHandler(k)
 
 	handlers.AddDebugHandler(k)
 	// handlers.AddAdminHandlers(k)

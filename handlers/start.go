@@ -1,6 +1,7 @@
 package handlers
 
 import (
+	"log"
 	"strconv"
 
 	"github.com/dartt0n/klaus/klaus"
@@ -20,22 +21,36 @@ func AddStartHandler(k *klaus.Klaus) {
 			} else if upd.CallbackQuery.Data == loc.RUS.Lang {
 				user.Lang = loc.RUS.Lang
 				user.Loc = &loc.RUS
+			} else {
+				user.Lang = loc.ENG.Lang
+				user.Loc = &loc.ENG
 			}
 
 			if _, err := bot.Request(tg.NewCallback(upd.CallbackQuery.ID, upd.CallbackQuery.Data)); err != nil {
 				return err
 			}
 
-			msgconf := tg.NewMessage(upd.CallbackQuery.Message.Chat.ID, user.Loc.StartMessage())
-			msgconf.ReplyMarkup = StartKeyboard(user.Loc)
+			if len(user.Prefs) == 0 {
+				msgconf := tg.NewMessage(upd.CallbackQuery.Message.Chat.ID, user.Loc.RegistrationClosed())
+				msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true)
+				if _, err := bot.Send(msgconf); err != nil {
+					return err
+				}
 
+				return nil
+			}
+
+			giftFor, err := k.Storage.Get(strconv.FormatInt(user.GiftFor, 10))
+			if err != nil {
+				return err
+			}
+			log.Printf("START")
+
+			msgconf := tg.NewMessage(upd.CallbackQuery.Message.Chat.ID, user.Loc.InfoGiftMessage(giftFor.Username, giftFor.Alias, giftFor.Prefs))
+			msgconf.ReplyMarkup = tg.NewRemoveKeyboard(true)
 			if _, err := bot.Send(msgconf); err != nil {
 				return err
 			}
-
-			user.Prefs = []string{}
-			user.State = klaus.StateRules
-			k.Storage.Put(userKey, user)
 
 			return nil
 		},

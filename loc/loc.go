@@ -17,4 +17,7 @@ type Localization interface {
 	RulesButtonYes() string
 	RulesMessage() string
 	StartupMessage() string
+	GiftForMessage(name, alias string, prefs []string) string
+	RegistrationClosed() string
+	InfoGiftMessage(name, alias string, prefs []string) string
 }

@@ -18,15 +18,15 @@ const (
 )
 
 type User struct {
-	ID       int64    `json:"id,omitempty"`
-	Username string   `json:"username,omitempty"`
-	Alias    string   `json:"alias,omitempty"`
-	Lang     string   `json:"lang,omitempty"`
-	Messages []int    `json:"messages,omitempty"`
-	State    int      `json:"state,omitempty"`
-	Prefs    []string `json:"preferences,omitempty"`
-
-	Loc loc.Localization `json:"loc,omitempty"`
+	ID       int64            `json:"id,omitempty"`
+	Username string           `json:"username,omitempty"`
+	Alias    string           `json:"alias,omitempty"`
+	Lang     string           `json:"lang,omitempty"`
+	Messages []int            `json:"messages,omitempty"`
+	State    int              `json:"state,omitempty"`
+	Prefs    []string         `json:"preferences,omitempty"`
+	Loc      loc.Localization `json:"loc,omitempty"`
+	GiftFor  int64            `json:"giftFor,omitempty"`
 }
 
 func NewUser(upd tg.Update) User {
@@ -52,6 +52,7 @@ func (u *User) UnmarshalJSON(bytes []byte) error {
 		Messages []int    `json:"messages,omitempty"`
 		State    int      `json:"state,omitempty"`
 		Prefs    []string `json:"preferences,omitempty"`
+		GiftFor  int64    `json:"giftFor,omitempty"`
 	}
 
 	if err := json.Unmarshal(bytes, &data); err != nil {
@@ -65,6 +66,7 @@ func (u *User) UnmarshalJSON(bytes []byte) error {
 	u.Messages = data.Messages
 	u.State = data.State
 	u.Prefs = data.Prefs
+	u.GiftFor = data.GiftFor
 
 	switch u.Lang {
 	case loc.ENG.Lang:

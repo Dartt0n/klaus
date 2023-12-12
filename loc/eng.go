@@ -1,5 +1,7 @@
 package loc
 
+import "fmt"
+
 var (
 	_   Localization = (*engloc)(nil)
 	ENG              = engloc{"en"}
@@ -104,4 +106,51 @@ Attention, my dear friend! Tomorrow, after 11:00 AM, you'll receive the name of 
 Remember, in order to receive the name of the person you're preparing a gift for, you must add at least one preference. If you haven't done so yet, don't miss this opportunity to make your gift extra special!
 
 Can't wait to enter new preferences or register again? Simply type /start to begin the process again and share your thoughtful preferences. Let the magic of giving continue! 🎅`
+}
+
+func (e *engloc) GiftForMessage(name, alias string, prefs []string) string {
+	prefs_str := ""
+	for _, pref := range prefs {
+		prefs_str += " • " + pref + "\n"
+	}
+
+	return fmt.Sprintf(`And... the moment of thuth... You are Secret Santa for...
+
+	%s (@%s)!!!
+	His/her preferences are: 
+	%s
+	
+	Remember, you should prepare a present before the 21th of Decemeber and bring it to the 319 office.
+	Don't forget to sign whom the gift is to!`, name, alias, prefs_str)
+}
+
+func (e *engloc) RegistrationClosed() string {
+	return `🎅 Ho Ho Ho! The sleigh is full, and Santa's workshop is bustling with preparations for the big day! We're sorry to say that the registration for this year's Secret Santa has officially closed. But fear not, for the spirit of giving and joy is still very much alive! Keep spreading the holiday cheer, and who knows, maybe a little surprise might find its way to you too! 🎅`
+}
+
+func (e *engloc) InfoGiftMessage(name, alias string, prefs []string) string {
+	prefs_str := ""
+	for _, pref := range prefs {
+		prefs_str += " • " + pref + "\n"
+	}
+
+	return fmt.Sprintf(`Ho ho ho! 🎁
+
+Remember, what you should do:
+1️⃣ You need to prepare present:
+The maximum value of the gift is 300 rubles
+You need to make a gift before the 21th of December (inclusive)
+Don't forget to attach a card with nice words, and sign whom the gift is to
+
+2️⃣ Then gift is ready, bring it to the 319 office
+
+3️⃣ If you are leaving early, you can take your gift in the 319 office (please contact the administrator beforehand)
+
+4️⃣ If you are not, be ready to have fun and receive your gift at 🎉New Year Party🎉 (it will take place on the 22th December)
+
+
+You are Secret Santa for
+%s (@%s)!!!
+His/her preferences are: 
+%s`, name, alias, prefs_str)
 }

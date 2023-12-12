@@ -43,7 +43,6 @@ func AddLocaleHandler(k *klaus.Klaus) {
 				return err
 			}
 
-			user.Prefs = []string{}
 			user.State = klaus.StateLocale
 			k.Storage.Put(storeKey, user)
 
