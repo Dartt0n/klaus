@@ -99,13 +99,7 @@ Want to specify preferences about your present?`
 }
 
 func (e *engloc) StartupMessage() string {
-	return `Ho ho ho! 🎁
-
-Attention, my dear friend! Tomorrow, after 11:00 AM, you'll receive the name of the person you're preparing a gift for! But wait, there's still time for you to tell us your preferences. This is your last chance to ensure your gift will bring joy to its recipient! ⏰
-
-Remember, in order to receive the name of the person you're preparing a gift for, you must add at least one preference. If you haven't done so yet, don't miss this opportunity to make your gift extra special!
-
-Can't wait to enter new preferences or register again? Simply type /start to begin the process again and share your thoughtful preferences. Let the magic of giving continue! 🎅`
+	return `Hello, my friend! A miracle is about to happen, and gifts will be in the hands of the recipients! By the way, don't forget to sign and bring your gift to room 319. Let the magic happen!`
 }
 
 func (e *engloc) GiftForMessage(name, alias string, prefs []string) string {
