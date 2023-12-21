@@ -99,7 +99,7 @@ Want to specify preferences about your present?`
 }
 
 func (e *engloc) StartupMessage() string {
-	return `Hello, my friend! A miracle is about to happen, and gifts will be in the hands of the recipients! By the way, don't forget to sign and bring your gift to room 319. Let the magic happen!`
+	return `Hello, friend! My elves have been counting the gifts and noticed that gift from you is missing. The last chance to deliver the present is <b>tomorrow by 14:00 in 319 office</b>. Unfortunately, we won't be able to give you your gift until you prepare one for your recipient!`
 }
 
 func (e *engloc) GiftForMessage(name, alias string, prefs []string) string {
