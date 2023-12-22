@@ -99,11 +99,7 @@ Want to specify preferences about your present?`
 }
 
 func (e *engloc) StartupMessage() string {
-	return `🎅 Ho ho ho! To the attention of all students! My elves are already giving gifts on the first floor of the university.
-
-Don't forget to share the joy and festive mood with your fellow students. Let's make this time of the year unforgettable!
-	
-Merry Christmas to everyone and have a good vacation in school! 🎁🎄`
+	return `And of course we didn't forget about the staff! Don't forget to grab a present on the way home!`
 }
 
 func (e *engloc) GiftForMessage(name, alias string, prefs []string) string {
